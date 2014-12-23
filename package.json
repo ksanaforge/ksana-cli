@@ -1,0 +1,39 @@
+{
+  "name": "ksana-cli",
+  "description": "Ksana command line interface",
+  "version": "1.0.12",
+  "homepage": "https://github.com/ksanaforge/ksana-cli",
+  "author": {
+    "name": "Yap Cheah Shen",
+    "url": "http://www.ksana.tw/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ksanaforge/ksana-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ksanaforge/ksana-cli/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ksanaforge/ksana-cli/blob/master/LICENSE"
+    }
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "bin": {
+    "ksana": "./bin/ksana.js"
+  },
+  "keywords": [
+    "command line",
+    "task runner"
+  ],
+  "dependencies": {
+    "liftoff": "~0.13.2",
+    "minimist": "~1.1.0"
+  },
+  "devDependencies": {}
+}
