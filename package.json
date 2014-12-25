@@ -35,5 +35,12 @@
     "liftoff": "~0.13.2",
     "minimist": "~1.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "readme": "ksana-cli\r\n=========\r\n\r\ncommand line interface for ksana services\r\n",
+  "readmeFilename": "README.md",
+  "gitHead": "6c51c6bd18ebda76c0cfd35c11a31c9c23dde9e6",
+  "_id": "ksana-cli@1.0.12",
+  "scripts": {},
+  "_shasum": "4db6ee00189e2dae5d810162ab891fd6f2cc83ad",
+  "_from": "ksana-cli@"
 }

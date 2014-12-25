@@ -21,16 +21,29 @@ const Ksana = new Liftoff({
   console.log('Respawned to PID:', child.pid);
 });
 
-Ksana.launch({
-  cwd: argv.cwd,
-  configPath: argv.ksanafile || "Ksanafile" ,
-  require: argv.require,
-  completion: argv.completion,
-  verbose: argv.verbose
-}, invoke);
 
-function invoke (env) {
+var initfolder=function(argv,env) {
+  var fs=require("fs");
 
+  if (!fs.existsSync(".git")){
+    console.log("The folder should be controlled by git");
+    return true;
+  } else {
+    if (argv._[0]=="init") {
+      require("../lib/initapp.js")(argv,env);
+      return true;
+    } else {
+      if (!fs.existsSync("ksanafile.js")){
+        console.log("to initialize ksana app, type");
+        console.log("ksana init");
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+}
+var invoke=function(env) {
   if (argv.verbose) {
     console.log('LIFTOFF SETTINGS:', this);
     console.log('CLI OPTIONS:', argv);
@@ -44,10 +57,26 @@ function invoke (env) {
     console.log('CLI PACKAGE.JSON', require('../package'));
   }
 
-  if(env.configPath) {
-    process.chdir(env.configBase);
-    require(env.configPath);
+  if (argv._.length==0 || argv._[0]=="help") {
+    require("../lib/help")(argv,env);
   } else {
-    console.log('No Ksanafile found.');
+    if (initfolder(argv,env)) {
+      //completed
+    } else 
+      if(env.configPath) {
+        process.chdir(env.configBase);
+        require("../lib/commands")(argv,env);
+        require(env.configPath);
+      } else {
+        console.log('No Ksanafile found.');
+      }    
   }
 }
+
+Ksana.launch({
+  cwd: argv.cwd,
+  configPath: argv.ksanafile ,
+  require: argv.require,
+  completion: argv.completion,
+  verbose: argv.verbose
+}, invoke);
