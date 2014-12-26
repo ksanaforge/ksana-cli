@@ -33,7 +33,8 @@
   ],
   "dependencies": {
     "liftoff": "~0.13.2",
-    "minimist": "~1.1.0"
+    "minimist": "~1.1.0",
+    "chalk":"*"
   },
   "devDependencies": {},
   "readme": "ksana-cli\r\n=========\r\n\r\ncommand line interface for ksana services\r\n",
