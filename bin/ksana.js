@@ -33,7 +33,7 @@ var initfolder=function(argv,env) {
       require("../lib/initapp.js")(argv,env);
       return true;
     } else {
-      if (!fs.existsSync("ksanafile.js")){
+      if (!fs.existsSync("ksana.js")){
         console.log("to initialize ksana app, type");
         console.log("ksana init");
         return true;
@@ -68,7 +68,7 @@ var invoke=function(env) {
         require("../lib/commands")(argv,env);
         require(env.configPath);
       } else {
-        console.log('No Ksanafile found.');
+        console.log('No Ksana.js found.');
       }    
   }
 }

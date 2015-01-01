@@ -25,16 +25,18 @@
     "node": ">= 0.10.0"
   },
   "bin": {
-    "ksana": "./bin/ksana.js"
+    "ks": "./bin/ksana.js"
   },
   "keywords": [
     "command line",
     "task runner"
   ],
   "dependencies": {
+    "chalk": "*",
+    "glob": "^4.3.2",
     "liftoff": "~0.13.2",
     "minimist": "~1.1.0",
-    "chalk":"*"
+    "sax": "^0.6.1"
   },
   "devDependencies": {},
   "readme": "ksana-cli\r\n=========\r\n\r\ncommand line interface for ksana services\r\n",
