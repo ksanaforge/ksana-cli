@@ -64,9 +64,10 @@ var invoke=function(env) {
       //completed
     } else 
       if(env.configPath) {
+        console.log(env.configPath)
         process.chdir(env.configBase);
         require("../lib/commands")(argv,env);
-        require(env.configPath);
+        //require(env.configPath);
       } else {
         console.log('No Ksana.js found.');
       }    
@@ -75,7 +76,7 @@ var invoke=function(env) {
 
 Ksana.launch({
   cwd: argv.cwd,
-  configPath: argv.ksanafile ,
+  configPath: "ksana.js",//argv.ksanafile ,
   require: argv.require,
   completion: argv.completion,
   verbose: argv.verbose
