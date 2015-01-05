@@ -36,7 +36,7 @@ var initfolder=function(argv,env) {
       if (!fs.existsSync("ksana.js")){
         console.log("to initialize ksana app, type");
         console.log("ksana init");
-        return true;
+        return false;
       } else {
         return false;
       }
@@ -72,26 +72,35 @@ var invoke=function(env) {
     console.log('LOCAL PACKAGE.JSON:', env.modulePackage);
     console.log('CLI PACKAGE.JSON', require('../package'));
   }
-  var a0=argv._[0];
+  var a0=argv._[0], processed=true;
   if (argv._.length==0 || a0=="help") {
     require("../lib/help")(argv,env);
   } else {
     if (initfolder(argv,env)) {
       //completed
-      getkdb(a0,{recursive:argv.r,address:argv.a});
     } else {
-
       if(env.configPath) {
-        console.log(env.configPath)
+        //console.log(env.configPath)
         process.chdir(env.configBase);
         if (!require("../lib/commands")(argv,env)) {
-          getkdb(a0,{recursive:argv.r,address:argv.a});   
+          processed=false;
         }
       } else {
-        getkdb(a0,{recursive:argv.r,address:argv.a});
+        console.log("no ksana.js")
+        processed=false;
       }    
     }
   }
+  if (!processed)  {
+    if (a0=="mkdb") {
+            require("../lib/mkdb")(argv._[1],argv._[2],argv.c)
+    } else {
+        getkdb(a0,{recursive:argv.r,address:argv.a}); 
+    }
+
+  }
+
+  
 }
 
 Ksana.launch({
