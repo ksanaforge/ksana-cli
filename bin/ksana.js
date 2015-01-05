@@ -43,6 +43,22 @@ var initfolder=function(argv,env) {
     }
   }
 }
+var getkdb=function(dbpath,opts) {
+  var m="../node_modules/ksana-database/index.js";
+  var m=require("path").resolve(process.cwd(),m);
+  var paths=dbpath.split(".");
+  dbid=fn=paths.shift();
+  require(m).open(dbid,function(err,db){
+    if (err) {
+      console.log(err);
+    } else {
+      db.get(paths,opts,function(data){
+        console.log(data);
+      });
+    }
+  })
+}
+
 var invoke=function(env) {
   if (argv.verbose) {
     console.log('LIFTOFF SETTINGS:', this);
@@ -56,21 +72,25 @@ var invoke=function(env) {
     console.log('LOCAL PACKAGE.JSON:', env.modulePackage);
     console.log('CLI PACKAGE.JSON', require('../package'));
   }
-
-  if (argv._.length==0 || argv._[0]=="help") {
+  var a0=argv._[0];
+  if (argv._.length==0 || a0=="help") {
     require("../lib/help")(argv,env);
   } else {
     if (initfolder(argv,env)) {
       //completed
-    } else 
+      getkdb(a0,{recursive:argv.r,address:argv.a});
+    } else {
+
       if(env.configPath) {
         console.log(env.configPath)
         process.chdir(env.configBase);
-        require("../lib/commands")(argv,env);
-        //require(env.configPath);
+        if (!require("../lib/commands")(argv,env)) {
+          getkdb(a0,{recursive:argv.r,address:argv.a});   
+        }
       } else {
-        console.log('No Ksana.js found.');
+        getkdb(a0,{recursive:argv.r,address:argv.a});
       }    
+    }
   }
 }
 
