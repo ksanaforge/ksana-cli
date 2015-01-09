@@ -48,6 +48,9 @@ var getkdb=function(dbpath,opts) {
   var m=require("path").resolve(process.cwd(),m);
   var paths=dbpath.split(".");
   dbid=fn=paths.shift();
+  if (!require("fs").existsSync(m)) {
+    return;//cannot run getkdb here
+  }
   require(m).open(dbid,function(err,db){
     if (err) {
       console.log(err);
