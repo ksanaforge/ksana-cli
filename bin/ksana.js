@@ -43,7 +43,17 @@ var initfolder=function(argv,env) {
     }
   }
 }
-var getkdb=function(dbpath,opts) {
+var printCharAtVpos=function(db,vpos) {
+  var fp=db.fileSegFromVpos(vpos);
+  var start=db.fileSegToVpos(fp.file,fp.seg-1)
+  var offset=vpos-start;
+  db.get(['filecontents',fp.file,fp.seg-1],function(data){
+    console.log("file",fp.file,"seg",fp.seg);
+    console.log("STARTING",data.substr(0,20));
+    console.log(">>>"+data.substr(offset,20)+"<<<");
+  })
+}
+var getkdb=function(dbpath,vpos,opts) {
   var m="../node_modules/ksana-database/index.js";
   var m=require("path").resolve(process.cwd(),m);
   var paths=dbpath.split(".");
@@ -55,6 +65,9 @@ var getkdb=function(dbpath,opts) {
     if (err) {
       console.log(err);
     } else {
+      if (vpos) {
+        printCharAtVpos(db,vpos);
+      }
       db.get(paths,opts,function(data){
         console.log(data);
       });
@@ -75,7 +88,7 @@ var invoke=function(env) {
     console.log('LOCAL PACKAGE.JSON:', env.modulePackage);
     console.log('CLI PACKAGE.JSON', require('../package'));
   }
-  var a0=argv._[0], processed=true;
+  var a0=argv._[0], a1=argv._[1], processed=true;
   if (argv._.length==0 || a0=="help") {
     require("../lib/help")(argv,env);
   } else {
@@ -98,7 +111,7 @@ var invoke=function(env) {
     if (a0=="mkdb") {
             require("../lib/mkdb")(argv._[1],argv._[2],argv.c)
     } else {
-        getkdb(a0,{recursive:argv.r,address:argv.a}); 
+        getkdb(a0,a1,{recursive:argv.r,address:argv.a}); 
     }
 
   }
