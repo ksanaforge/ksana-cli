@@ -45,7 +45,7 @@ var initfolder=function(argv,env) {
 }
 var printCharAtVpos=function(db,vpos) {
   var fp=db.fileSegFromVpos(vpos);
-  var start=db.fileSegToVpos(fp.file,fp.seg-1)
+  var start=db.fileSegToVpos(fp.file,fp.seg)
   var offset=vpos-start;
   console.log(offset,fp.seg)
   db.get(['filecontents',fp.file,fp.seg],function(data){
