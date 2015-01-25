@@ -47,10 +47,11 @@ var printCharAtVpos=function(db,vpos) {
   var fp=db.fileSegFromVpos(vpos);
   var start=db.fileSegToVpos(fp.file,fp.seg-1)
   var offset=vpos-start;
-  db.get(['filecontents',fp.file,fp.seg-1],function(data){
+  console.log(offset,fp.seg)
+  db.get(['filecontents',fp.file,fp.seg],function(data){
     console.log("file",fp.file,"seg",fp.seg);
-    console.log("STARTING",data.substr(0,20));
-    console.log(">>>"+data.substr(offset,20)+"<<<");
+    console.log("STARTING",data.substr(0,20).trim());
+    console.log(">>>"+data.substr(offset,20).trim()+"<<<");
   })
 }
 var getkdb=function(dbpath,vpos,opts) {
