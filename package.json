@@ -37,7 +37,7 @@
     "liftoff": "*",
     "minimist": "*",
     "sax": "*",
-    "reactify":"*",
+    "reactify":"~0.17.0",
     "watchify":"*",
     "browserify":"*",
     "exorcist":"*",
