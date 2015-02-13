@@ -1,7 +1,7 @@
 {
   "name": "ksana-cli",
   "description": "Ksana command line interface",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "homepage": "https://github.com/ksanaforge/ksana-cli",
   "author": {
     "name": "Yap Cheah Shen",
@@ -37,7 +37,7 @@
     "liftoff": "*",
     "minimist": "*",
     "sax": "*",
-    "reactify":"~0.17.0",
+    "react-tools":"*",
     "watchify":"*",
     "browserify":"*",
     "exorcist":"*",
