@@ -56,13 +56,17 @@ var printCharAtVpos=function(db,vpos) {
 }
 var getkdb=function(dbpath,vpos,opts) {
   var m="../node_modules/ksana-database/index.js";
-  var m=require("path").resolve(process.cwd(),m);
+  var mod=require("path").resolve(process.cwd(),m);
+  
   var paths=dbpath.split(".");
   dbid=fn=paths.shift();
   if (!require("fs").existsSync(m)) {
-    return;//cannot run getkdb here
+  	  m="../"+m;
+  	  if (!require("fs").existsSync(m)) return;
+  	  mod=require("path").resolve(process.cwd(),m);
   }
-  require(m).open(dbid,function(err,db){
+  
+  require(mod).open(dbid,function(err,db){
     if (err) {
       console.log(err);
     } else {
@@ -110,7 +114,9 @@ var invoke=function(env) {
   }
   if (!processed)  {
     if (a0=="mkdb") {
-            require("../lib/mkdb")(argv._[1],argv._[2],argv.c)
+      require("../lib/mkdb")(argv._[1],argv._[2],argv.c)
+    } else if (a0=="chromeapp") {
+      require("../lib/chromeapp")(argv._[1],argv._[2])
     } else {
         getkdb(a0,a1,{recursive:argv.r,address:argv.a}); 
     }
