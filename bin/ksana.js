@@ -113,9 +113,11 @@ var invoke=function(env) {
     }
   }
   if (!processed)  {
-    if (a0=="mkdb") {
+    if (a0==="mkdb") {
       require("../lib/mkdb")(argv._[1],argv._[2],argv.c)
-    } else if (a0=="chromeapp") {
+    } else if (a0==="dump") {
+      require("../lib/dump")(argv._[1])
+    } else if (a0==="chromeapp") {
       require("../lib/chromeapp")(argv._[1],argv._[2])
     } else {
         getkdb(a0,a1,{recursive:argv.r,address:argv.a}); 
