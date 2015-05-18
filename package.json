@@ -1,7 +1,7 @@
 {
   "name": "ksana-cli",
   "description": "Ksana command line interface",
-  "version": "1.0.39",
+  "version": "1.1.0",
   "homepage": "https://github.com/ksanaforge/ksana-cli",
   "author": {
     "name": "Yap Cheah Shen",
@@ -41,7 +41,10 @@
     "watchify":"*",
     "browserify":"*",
     "exorcist":"*",
-    "uglify-js":"*"
+    "uglify-js":"*",
+    "socket.io":"*",
+    "ksana-database": "git+https://github.com/ksanaforge/ksana-database.git",
+    "ksana-jsonrom": "git+https://github.com/ksanaforge/ksana-jsonrom.git"
   },
   "devDependencies": {},
   "readme": "ksana-cli\r\n=========\r\n\r\ncommand line interface for ksana services\r\n",
