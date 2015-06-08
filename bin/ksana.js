@@ -57,8 +57,12 @@ var printCharAtVpos=function(db,vpos) {
 var getkdb=function(dbpath,vpos,opts) {
   var m="../node_modules/ksana-database/index.js";
   var mod=require("path").resolve(process.cwd(),m);
-  
+  var getlength=false;
   var paths=dbpath.split(".");
+  if (paths[paths.length-1]==="length") {
+    getlength=true;
+    paths.pop();
+  }
   dbid=fn=paths.shift();
   if (!require("fs").existsSync(m)) {
   	  m="../"+m;
@@ -74,7 +78,11 @@ var getkdb=function(dbpath,vpos,opts) {
         printCharAtVpos(db,vpos);
       }
       db.get(paths,opts,function(data){
-        console.log(data);
+        if (getlength) {
+          console.log(data.length);
+        } else {
+          console.log(data);  
+        }
       });
     }
   })
