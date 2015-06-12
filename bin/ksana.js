@@ -27,7 +27,7 @@ var initfolder=function(argv,env) {
 
   if (!fs.existsSync(".git")){
     console.log("The folder should be controlled by git");
-    return true;
+    return false;
   } else {
     if (argv._[0]=="init") {
       require("../lib/initapp.js")(argv,env);
@@ -65,9 +65,9 @@ var getkdb=function(dbpath,vpos,opts) {
   }
   dbid=fn=paths.shift();
   if (!require("fs").existsSync(m)) {
-  	  m="../"+m;
-  	  if (!require("fs").existsSync(m)) return;
-  	  mod=require("path").resolve(process.cwd(),m);
+      m="../"+m;
+      if (!require("fs").existsSync(m)) return;
+      mod=require("path").resolve(process.cwd(),m);
   }
   
   require(mod).open(dbid,function(err,db){
@@ -127,6 +127,8 @@ var invoke=function(env) {
       require("../lib/dump")(argv._[1])
     } else if (a0==="chromeapp") {
       require("../lib/chromeapp")(argv._[1],argv._[2])
+    } else if (a0.substr(a0.length-4)===".xml") {
+      require("../lib/xml")(a0,argv._[1]);
     } else {
         getkdb(a0,a1,{recursive:argv.r,address:argv.a}); 
     }
