@@ -104,6 +104,9 @@ var invoke=function(env) {
   var a0=argv._[0], a1=argv._[1], processed=true;
   if (argv._.length==0 || a0=="help") {
     require("../lib/help")(argv,env);
+  } else if (a0=="bump") {
+    var version=require("./package").version;
+    require("../lib/bump")(version)
   } else {
     if (initfolder(argv,env)) {
       //completed
