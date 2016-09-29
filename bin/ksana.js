@@ -54,6 +54,43 @@ var printCharAtVpos=function(db,vpos) {
     console.log(">>>"+data.substr(offset,20).trim()+"<<<");
   })
 }
+const getCor=function(dbpath,kpos,opts){
+  const m="../node_modules/ksana-corpus/index.js";
+  var mod=require("path").resolve(process.cwd(),m);
+  var paths=dbpath.split(".");
+  var getlength=false;
+
+  if (paths[paths.length-1]==="length") {
+    getlength=true;
+    paths.pop();
+  }
+  dbid=fn=paths.shift();
+  if (!require("fs").existsSync(m)) {
+      m="../"+m;
+      if (!require("fs").existsSync(m)) return;
+      mod=require("path").resolve(process.cwd(),m);
+  }
+
+  require(mod).openCorpus(dbid,function(err,db){
+    if (err) {
+      console.log(err);
+    } else {
+      if (kpos) {
+        throw "print kpos not implement yet"
+        //printCharAtVpos(db,vpos);
+      }
+      console.log(paths)
+      db.get(paths,opts,function(data){
+        if (getlength) {
+          console.log(data.length);
+        } else {
+          console.log(data);  
+        }
+      });
+    }
+  })
+
+}
 var getkdb=function(dbpath,vpos,opts) {
   var m="../node_modules/ksana-database/index.js";
   var mod=require("path").resolve(process.cwd(),m);
@@ -105,8 +142,13 @@ var invoke=function(env) {
   if (argv._.length==0 || a0=="help") {
     require("../lib/help")(argv,env);
   } else if (a0=="bump") {
-    var version=require("./package").version;
-    require("../lib/bump")(version)
+    var pckjson=env.cwd+require("path").sep+"package.json";
+    if (require("fs").existsSync(pckjson)){
+      var version=require(pckjson).version;
+      require("../lib/bump")(version);
+    } else {
+      console.log("no package.json here");
+    }
   } else {
     if (initfolder(argv,env)) {
       //completed
@@ -123,6 +165,10 @@ var invoke=function(env) {
       }    
     }
   }
+
+  var dbid=a0;
+  const at=dbid.indexOf(".");
+  if (at>-1) dbid=dbid.substr(0,at);
   if (!processed)  {
     if (a0==="mkdb") {
       require("../lib/mkdb")(argv._[1],argv._[2],argv.c)
@@ -132,8 +178,10 @@ var invoke=function(env) {
       require("../lib/chromeapp")(argv._[1],argv._[2])
     } else if (a0.substr(a0.length-4)===".xml") {
       require("../lib/xml")(a0,argv._[1]);
+    } else if (require("fs").existsSync(dbid+".cor")){
+      getCor(a0,a1,{recursive:argv.r,address:argv.a});
     } else {
-        getkdb(a0,a1,{recursive:argv.r,address:argv.a}); 
+      getkdb(a0,a1,{recursive:argv.r}); 
     }
 
   }

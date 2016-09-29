@@ -1,7 +1,7 @@
 {
   "name": "ksana-cli",
   "description": "Ksana command line interface",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "homepage": "https://github.com/ksanaforge/ksana-cli",
   "author": {
     "name": "Yap Cheah Shen",
