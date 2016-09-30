@@ -34,8 +34,8 @@ var initfolder=function(argv,env) {
       return true;
     } else {
       if (!fs.existsSync("ksana.js")){
-        console.log("to initialize ksana app, type");
-        console.log("ksana init");
+        //console.log("to initialize ksana app, type");
+        //console.log("ksana init");
         return false;
       } else {
         return false;
@@ -79,7 +79,6 @@ const getCor=function(dbpath,kpos,opts){
         throw "print kpos not implement yet"
         //printCharAtVpos(db,vpos);
       }
-      console.log(paths)
       db.get(paths,opts,function(data){
         if (getlength) {
           console.log(data.length);
