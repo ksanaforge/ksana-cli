@@ -55,7 +55,7 @@ var printCharAtVpos=function(db,vpos) {
   })
 }
 const getCor=function(dbpath,kpos,opts){
-  const m="../node_modules/ksana-corpus/index.js";
+  var m="../node_modules/ksana-corpus/index.js";
   var mod=require("path").resolve(process.cwd(),m);
   var paths=dbpath.split(".");
   var getlength=false;
